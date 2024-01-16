@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('elevator')->nullable();
             $table->string('energetic_class')->nullable();
             $table->boolean('cave')->nullable();
+            $table->json('images')->nullable();
             $table->timestamps(); // created_at et updated_at
 
             $table->unsignedBigInteger('user_id')->nullable();

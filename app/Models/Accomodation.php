@@ -22,7 +22,7 @@ class Accomodation extends Model
         'elevator',
         'energetic_class',
         'cave',
-        'user_id'
+        'user_id',
     ];
 
     protected $casts = [
@@ -36,5 +36,10 @@ class Accomodation extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function pictures()
+    {
+        return $this->hasMany(Picture::class);
     }
 }
