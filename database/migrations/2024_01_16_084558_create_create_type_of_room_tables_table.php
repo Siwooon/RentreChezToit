@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('create_type_of_room_tables', function (Blueprint $table) {
+        Schema::create('type_of_rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();

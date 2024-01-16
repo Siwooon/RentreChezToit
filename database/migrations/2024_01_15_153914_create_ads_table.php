@@ -17,6 +17,13 @@ class CreateAdsTable extends Migration
             $table->text('description');
             $table->decimal('price', 10, 2);
             $table->timestamps(); // created_at et updated_at
+
+            $table->unsignedBigInteger('user_id'); // Ajoutez la colonne pour la clé étrangère
+            $table->unsignedBigInteger('accomodation_id'); // Ajoutez la colonne pour la clé étrangère
+        
+            // Définissez la clé étrangère
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('accomodations_id')->references('id')->on('accomodations')->onDelete('cascade');
         });
     }
 

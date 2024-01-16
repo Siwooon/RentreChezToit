@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('create_accomodations_tables', function (Blueprint $table) {
+        Schema::create('accomodations', function (Blueprint $table) {
             $table->id();
             $table->string('address');
             $table->integer('bedrooms');
@@ -25,7 +25,11 @@ return new class extends Migration
             $table->boolean('elevator');
             $table->string('energetic_class')->nullable();
             $table->boolean('cave');
+            $table->unsignedBigInteger('type_id');
+
             $table->timestamps(); // created_at et updated_at
+
+            $table->foreign('types_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 
