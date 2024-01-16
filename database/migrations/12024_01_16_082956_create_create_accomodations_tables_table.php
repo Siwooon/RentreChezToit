@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('accomodations');
         Schema::create('accomodations', function (Blueprint $table) {
             $table->id();
             $table->string('address');
@@ -29,7 +30,7 @@ return new class extends Migration
 
             $table->timestamps(); // created_at et updated_at
 
-            $table->foreign('types_id')->references('id')->on('types')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 
@@ -38,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('create_accomodations_tables');
+        Schema::dropIfExists('accomodations');
     }
 };

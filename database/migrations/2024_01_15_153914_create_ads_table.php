@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdsTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -22,8 +22,8 @@ class CreateAdsTable extends Migration
             $table->unsignedBigInteger('accomodation_id'); // Ajoutez la colonne pour la clé étrangère
         
             // Définissez la clé étrangère
-            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('accomodations_id')->references('id')->on('accomodations')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('accomodation_id')->references('id')->on('accomodations')->onDelete('cascade');
         });
     }
 
@@ -31,4 +31,4 @@ class CreateAdsTable extends Migration
     {
         Schema::dropIfExists('ads');
     }
-}
+};

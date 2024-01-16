@@ -4,10 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTypesTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
+        Schema::dropIfExists('types');
         Schema::create('types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -22,4 +23,4 @@ class CreateTypesTable extends Migration
     {
         Schema::dropIfExists('types');
     }
-}
+};

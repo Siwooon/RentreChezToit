@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('rooms');
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->decimal('size', 10, 2);
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('create_room_tables');
+        Schema::dropIfExists('rooms');
     }
 };
