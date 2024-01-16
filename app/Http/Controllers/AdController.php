@@ -30,22 +30,22 @@ class AdController extends Controller
 
     public function update(Request $request, $id)
     {
-        $ad = Ad::find($id);
+        $ad = Ad::findOrFail($id);
 
-        if ($ad) {
-            $validated = $request->validate([
-                'title' => 'required|string',
-                'description' => 'required|string',
-                'price' => 'required|integer'
-            ]);
-            $ad->update($validated);
-        }
-        
-        else {
-            return abort(404);
-        }
-        return response()->json($ad, 201);
+        // Validez les champs que vous souhaitez mettre à jour
+        $validatedData = $request->validate([
+            'title' => 'string',
+            'description' => 'string',
+            'price' => 'numeric',
+            // Ajoutez d'autres règles de validation au besoin...
+        ]);
+
+        // Appliquez les modifications au modèle Ad
+        $ad->update($validatedData);
+
+        return response()->json(['message' => 'Ad updated successfully', 'data' => $ad]);
     }
+    
     public function destroy($id)
     {
         $ad = Ad::find($id);

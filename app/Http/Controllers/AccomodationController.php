@@ -38,31 +38,27 @@ class AccomodationController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $accomodation = Accomodation::find($id);
 
-        if ($accomodation) {
-            $validated = $request->validate([
-                'address' => 'required|string',
-                'bedrooms' => 'required|integer',
-                'bathrooms' => 'required|integer',
-                'living_space' => 'required|numeric',
-                'land_area' => 'required|integer',
-                'description' => 'required|string',
-                'garage' => 'nullable|boolean',
-                'balcony' => 'nullable|boolean',
-                'terrace' => 'nullable|boolean',
-                'elevator' => 'nullable|boolean',
-                'energetic_class' => 'nullable|string',
-                'cave' => 'nullable|boolean'
-            ]);
-            $accomodation->update($validated);
-        }
+        $ad = Ad::findOrFail($id);
 
-        else {
-            return abort(404);
-        }
+        $validatedData = $request->validate([
+            'address' => 'required|string',
+            'bedrooms' => 'required|integer',
+            'bathrooms' => 'required|integer',
+            'living_space' => 'required|numeric',
+            'land_area' => 'required|integer',
+            'description' => 'required|string',
+            'garage' => 'nullable|boolean',
+            'balcony' => 'nullable|boolean',
+            'terrace' => 'nullable|boolean',
+            'elevator' => 'nullable|boolean',
+            'energetic_class' => 'nullable|string',
+            'cave' => 'nullable|boolean'
+        ]);
 
-        return response()->json($accomodation, 201);
+        $ad->update($validatedData);
+
+        return response()->json(['message' => 'Ad updated successfully', 'data' => $ad]);
     }
 
     public function destroy($id) {
