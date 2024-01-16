@@ -2,19 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ad extends Model
+class Picture extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'title',
-        'description',
-        'price',
-        'user_id', 
-        'accomodation_id'
+        'path',
+        'user_id',
+        'accomodation_id',
+        'ad_id',
     ];
 
     public function user()
@@ -25,5 +21,10 @@ class Ad extends Model
     public function accomodation()
     {
         return $this->belongsTo(Accomodation::class);
+    }
+
+    public function ad()
+    {
+        return $this->belongsTo(Ad::class);
     }
 }

@@ -24,4 +24,17 @@ class Accomodation extends Model
         'cave',
         'user_id'
     ];
+
+    protected $casts = [
+        'garage' => 'boolean',
+        'balcony' => 'boolean',
+        'terrace' => 'boolean',
+        'elevator' => 'boolean',
+        'cave' => 'boolean',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

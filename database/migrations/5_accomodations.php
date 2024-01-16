@@ -18,17 +18,17 @@ return new class extends Migration
             $table->integer('bedrooms');
             $table->integer('bathrooms');
             $table->decimal('living_space', 10, 2);
-            $table->decimal('land_area', 10, 2)->default(null)->nullable();
+            $table->decimal('land_area', 10, 2)->nullable();
             $table->text('description');
-            $table->boolean('garage')->default(null)->nullable();
-            $table->boolean('balcony')->default(null)->nullable();
-            $table->boolean('terrace')->default(null)->nullable();
-            $table->boolean('elevator')->default(null)->nullable();
-            $table->string('energetic_class')->default(null)->nullable();
-            $table->boolean('cave')->default(null)->nullable();
+            $table->boolean('garage')->nullable();
+            $table->boolean('balcony')->nullable();
+            $table->boolean('terrace')->nullable();
+            $table->boolean('elevator')->nullable();
+            $table->string('energetic_class')->nullable();
+            $table->boolean('cave')->nullable();
             $table->timestamps(); // created_at et updated_at
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
 
