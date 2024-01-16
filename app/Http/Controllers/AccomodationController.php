@@ -63,8 +63,6 @@ class AccomodationController extends Controller
         }
 
         return response()->json($accomodation, 201);
-
-
     }
 
     public function destroy($id) {

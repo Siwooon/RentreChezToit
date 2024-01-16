@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccomodationController;
+use App\Http\Controllers\AdController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,11 +37,12 @@ Route::group(['prefix' => 'accomodation'], function () {
 });
 
 Route::group(['prefix' => 'ad'], function () {
-    Route::get('detail/{id}', [AccomodationController::class, 'show'])->name('accomodation.show');
-    Route::post('add', [AccomodationController::class, 'store'])->name('accomodation.store');
-    Route::put('update/{id}', [AccomodationController::class, 'update'])->name('accomodation.update');
-    Route::delete('destroy/{id}', [AccomodationController::class, 'destroy'])->name('accomodation.destroy');
+    Route::get('detail/{id}', [AdController::class, 'show'])->name('accomodation.show');
+    Route::post('add', [AdController::class, 'store'])->name('accomodation.store');
+    Route::put('update/{id}', [AdController::class, 'update'])->name('accomodation.update');
+    Route::delete('destroy/{id}', [AdController::class, 'destroy'])->name('accomodation.destroy');
 });
+
 
 
 

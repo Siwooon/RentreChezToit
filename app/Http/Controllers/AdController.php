@@ -4,63 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAdsRequest;
 use App\Http\Requests\UpdateAdsRequest;
-use App\Models\Ads;
+use App\Models\Ad;
+use Illuminate\Http\Request;
 
 class AdController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function show($id)
     {
-        //
+        $ad = Ad::find($id);
+        return response()->json($ad, 201);
+    }
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|integer'
+        ]);
+
+        $ad = Ad::create($validated);
+
+        return response()->json($ad, 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $ad = Ad::find($id);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAdsRequest $request)
-    {
-        //
+        if ($ad) {
+            $validated = $request->validate([
+                'title' => 'required|string',
+                'description' => 'required|string',
+                'price' => 'required|integer'
+            ]);
+            $ad->update($validated);
+        }
+        
+        else {
+            return abort(404);
+        }
+        return response()->json($ad, 201);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show()
+    public function destroy($id)
     {
-        //
-    }
+        $ad = Ad::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update()
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy()
-    {
-        //
+        if ($ad) {
+            $ad->delete();
+            return response()->json(201);
+        } else {
+            return abort(404);
+        }
     }
 }
