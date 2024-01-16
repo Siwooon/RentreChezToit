@@ -22,5 +22,6 @@ class Accomodation extends Model
         'elevator',
         'energetic_class',
         'cave',
+        'user_id'
     ];
 }

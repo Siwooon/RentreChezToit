@@ -26,8 +26,12 @@ return new class extends Migration
             $table->boolean('elevator')->default(null)->nullable();
             $table->string('energetic_class')->default(null)->nullable();
             $table->boolean('cave')->default(null)->nullable();
-
             $table->timestamps(); // created_at et updated_at
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+
         });
     }
 
