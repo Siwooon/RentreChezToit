@@ -17,4 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+// Route::group(['prefix' => 'accomodation'], function () {
+//     Route::get('add', function () {return view('addAccomodation');});
+// });
