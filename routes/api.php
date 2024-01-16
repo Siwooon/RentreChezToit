@@ -34,5 +34,12 @@ Route::group(['prefix' => 'accomodation'], function () {
 
 });
 
+Route::group(['prefix' => 'ad'], function () {
+    Route::get('detail/{id}', [AccomodationController::class, 'show'])->name('accomodation.show');
+    Route::post('add', [AccomodationController::class, 'store'])->name('accomodation.store');
+    Route::put('update/{id}', [AccomodationController::class, 'update'])->name('accomodation.update');
+    Route::delete('destroy/{id}', [AccomodationController::class, 'destroy'])->name('accomodation.destroy');
+});
+
 
 

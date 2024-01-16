@@ -6,7 +6,7 @@ use App\Http\Requests\StoreAdsRequest;
 use App\Http\Requests\UpdateAdsRequest;
 use App\Models\Ads;
 
-class AdsController extends Controller
+class AdController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class AdsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Ads $ads)
+    public function show()
     {
         //
     }
@@ -43,7 +43,7 @@ class AdsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Ads $ads)
+    public function edit()
     {
         //
     }
@@ -51,7 +51,7 @@ class AdsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAdsRequest $request, Ads $ads)
+    public function update()
     {
         //
     }
@@ -59,7 +59,7 @@ class AdsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ads $ads)
+    public function destroy()
     {
         //
     }
