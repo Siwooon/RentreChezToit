@@ -22,7 +22,7 @@ class Accomodation extends Model
         'elevator',
         'energetic_class',
         'cave',
-        'user_id',
+        'images'
     ];
 
     protected $casts = [
@@ -31,15 +31,11 @@ class Accomodation extends Model
         'terrace' => 'boolean',
         'elevator' => 'boolean',
         'cave' => 'boolean',
+        'images' => 'array'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function pictures()
-    {
-        return $this->hasMany(Picture::class);
     }
 }

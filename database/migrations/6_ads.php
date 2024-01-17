@@ -18,8 +18,8 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->timestamps(); // created_at et updated_at
 
-            $table->unsignedBigInteger('user_id'); // Ajoutez la colonne pour la clé étrangère
-            $table->unsignedBigInteger('accomodation_id');
+            $table->unsignedBigInteger('user_id')->nullable(); // Ajoutez la colonne pour la clé étrangère
+            $table->unsignedBigInteger('accomodation_id')->nullable();
         
             // Définissez la clé étrangère
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

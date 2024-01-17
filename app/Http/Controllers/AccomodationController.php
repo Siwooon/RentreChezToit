@@ -42,35 +42,36 @@ class AccomodationController extends Controller
             'bedrooms' => 'required|integer',
             'bathrooms' => 'required|integer',
             'living_space' => 'required|numeric',
-            // 'land_area' => 'required|integer',
+            'land_area' => 'required|integer',
             'description' => 'required|string',
-            // 'garage' => 'nullable|boolean',
-            // 'balcony' => 'nullable|boolean',
-            // 'terrace' => 'nullable|boolean',
-            // 'elevator' => 'nullable|boolean',
-            // 'energetic_class' => 'nullable|string',
-            // 'cave' => 'nullable|boolean',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'garage' => 'nullable|boolean',
+            'balcony' => 'nullable|boolean',
+            'terrace' => 'nullable|boolean',
+            'elevator' => 'nullable|boolean',
+            'energetic_class' => 'nullable|string',
+            'cave' => 'nullable|boolean',
+            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
         $imagePaths = [];
 
         if ($request->hasFile('images')) {
+
             $accomodation = Accomodation::create($validated); // Créez l'accommodation pour obtenir son ID
             $accomodationId = $accomodation->id;
-    
-            foreach ($request->file('images') as $image) {
-                $imagePath = $image->storeAs("accomodation_images/{$accomodationId}", $image->getClientOriginalName(), 'public');
-                $imagePaths[] = $imagePath;
-            }
-    
+            // dd($request->file('images'));
+            $image_get = $request->file('images');
+            // dd($image_get);
+            
+            $imagePaths = $request->file('images')->store("public/accomodation_images/{$accomodationId}");
+
             // Mettez à jour le champ 'images' dans la base de données
             $accomodation->update(['images' => $imagePaths]);
+
+            return response()->json($accomodation, 201);
         }
-        else {
-            $accomodation = Accomodation::create($validated);
-        }
-        return response()->json($accomodation, 201);
+        // else {
+        //     $accomodation = Accomodation::create($validated);
+        // }
     }
 
     public function update(Request $request, $id) {

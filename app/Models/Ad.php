@@ -13,8 +13,6 @@ class Ad extends Model
         'title',
         'description',
         'price',
-        'user_id', 
-        'accomodation_id'
     ];
 
     public function user()
