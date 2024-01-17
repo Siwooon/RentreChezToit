@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -10,33 +11,17 @@ class AccomodationController extends Controller
 {
     public function show($id) {
         $accomodation = Accomodation::find($id);
-
+        $imagePaths = glob(public_path("storage/accomodation_images/{$id}/*"));
+        // dd($imagePaths);
+        $images = [];
+        foreach ($imagePaths as $imagePath) {
+            $images[] = asset($imagePath);
+        }
+        $accomodation->images = $images;
         return response()->json($accomodation, 201);
-
     }
 
     public function store(Request $request) {
-
-
-        // $validated = $request->validate([
-        //     'address' => 'required|string',
-        //     'bedrooms' => 'required|integer',
-        //     'bathrooms' => 'required|integer',
-        //     'living_space' => 'required|numeric',
-        //     'land_area' => 'required|integer',
-        //     'description' => 'required|string',
-        //     'garage' => 'nullable|boolean',
-        //     'balcony' => 'nullable|boolean',
-        //     'terrace' => 'nullable|boolean',
-        //     'elevator' => 'nullable|boolean',
-        //     'energetic_class' => 'nullable|string',
-        //     'cave' => 'nullable|boolean'
-        // ]);
-
-        // $accomodation = Accomodation::create($validated);
-
-        // return response()->json($accomodation, 201);
-
         $validated = $request->validate([
             'address' => 'required|string',
             'bedrooms' => 'required|integer',
@@ -50,28 +35,26 @@ class AccomodationController extends Controller
             'elevator' => 'nullable|boolean',
             'energetic_class' => 'nullable|string',
             'cave' => 'nullable|boolean',
-            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $imagePaths = [];
 
         if ($request->hasFile('images')) {
 
             $accomodation = Accomodation::create($validated); // Créez l'accommodation pour obtenir son ID
             $accomodationId = $accomodation->id;
-            // dd($request->file('images'));
-            $image_get = $request->file('images');
-            // dd($image_get);
             
-            $imagePaths = $request->file('images')->store("public/accomodation_images/{$accomodationId}");
+            foreach ($request->file('images') as $image) {
+                $imagePath = $image->store("public/accomodation_images/{$accomodationId}");
+            }
 
             // Mettez à jour le champ 'images' dans la base de données
-            $accomodation->update(['images' => $imagePaths]);
+            $accomodation->update(['images' => "public/accomodation_images/{$accomodationId}"]);
 
             return response()->json($accomodation, 201);
         }
-        // else {
-        //     $accomodation = Accomodation::create($validated);
-        // }
+        else {
+            $accomodation = Accomodation::create($validated);
+        }
     }
 
     public function update(Request $request, $id) {
@@ -90,9 +73,19 @@ class AccomodationController extends Controller
                 'terrace' => 'nullable|boolean',
                 'elevator' => 'nullable|boolean',
                 'energetic_class' => 'nullable|string',
-                'cave' => 'nullable|boolean'
+                'cave' => 'nullable|boolean',
+                'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
+
             $accomodation->update($validated);
+
+            if ($request->hasFile('images')) {
+
+                foreach ($request->file('images') as $image) {
+                    $image->store("public/accomodation_images/{$id}");
+                }
+                return response()->json($accomodation, 201);
+            }
         }
 
         else {
@@ -108,6 +101,7 @@ class AccomodationController extends Controller
 
         if ($accomodation) {
             $accomodation->delete();
+            Storage::deleteDirectory("public/accomodation_images/{$id}");
             return response()->json(201);
         } else {
             return abort(404);
